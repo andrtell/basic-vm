@@ -1,0 +1,65 @@
+- name: Create user
+
+  hosts: all
+  remote_user: root
+
+  vars:
+    agent_public_key: ~/.ssh/id_ed25519-agent.pub
+
+  handlers:
+    - name: Reboot
+      ansible.builtin.reboot:
+        reboot_timeout: 5
+
+  tasks:
+    
+    - name: Create group
+      ansible.builtin.group:
+        name: agent
+        gid: 1000
+        state: present
+    
+    - name: Create user
+      ansible.builtin.user:
+        name: agent
+        uid: 1000
+        shell: /bin/bash
+        group: agent
+        groups:
+          - sudo
+          - users
+          - agent
+        password: "{{ agent_password }}"
+    
+    - name: Set sudo password timeout to 0
+      ansible.builtin.blockinfile:
+        path: /etc/sudoers
+        insertafter: EOF
+        block: |
+          Defaults    timestamp_timeout=0
+    
+    - name: Create SSH directory
+      ansible.builtin.file:
+        path: /home/agent/.ssh
+        state: directory
+        owner: agent
+        group: agent
+        mode: 0500
+
+    - name: Update authorized keys
+      ansible.builtin.copy:
+        src: "{{ agent_public_key }}"
+        dest: /home/agent/.ssh/authorized_keys
+        owner: agent
+        group: agent
+        mode: 0600
+
+    - name: Disable root login via SSH
+      ansible.builtin.blockinfile:
+        path: /etc/ssh/sshd_config
+        insertafter: EOF
+        block: |
+          AllowUsers agent
+          PermitRootLogin no
+          PasswordAuthentication no
+      notify: Reboot

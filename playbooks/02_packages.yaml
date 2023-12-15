@@ -1,0 +1,26 @@
+- name: Packages
+
+  hosts: all
+  remote_user: agent
+  become: true
+
+  handlers:
+    - name: Reboot
+      ansible.builtin.reboot:
+
+  tasks:
+
+    - name: Update packages
+      ansible.builtin.apt:
+        update_cache: true
+
+    - name: Upgrade packages
+      ansible.builtin.apt:
+        upgrade: true
+    
+    - name: Install packages
+      ansible.builtin.apt:
+        name:
+          - unattended-upgrades
+        state: present
+      notify: Reboot
