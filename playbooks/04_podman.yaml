@@ -1,0 +1,21 @@
+- name: Podman
+
+  hosts: all
+  remote_user: agent
+
+  tasks:
+    
+    - name: Enable podman.socket
+      ansible.builtin.systemd:
+        daemon_reload: true
+        enabled: true
+        name: podman.socket
+        scope: user
+        state: started
+    
+    - name: Enable podman-restart
+      ansible.builtin.systemd:
+        enabled: true
+        name: podman-restart
+        scope: user
+        state: started

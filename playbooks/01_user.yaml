@@ -7,6 +7,7 @@
     agent_public_key: ~/.ssh/id_ed25519-agent.pub
 
   handlers:
+
     - name: Reboot
       ansible.builtin.reboot:
         reboot_timeout: 5
@@ -31,6 +32,10 @@
           - agent
         password: "{{ agent_password }}"
     
+    - name: Enable linger
+      changed_when: false
+      ansible.builtin.command: loginctl enable-linger agent
+
     - name: Set sudo password timeout to 0
       ansible.builtin.blockinfile:
         path: /etc/sudoers

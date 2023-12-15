@@ -10,6 +10,11 @@
 
   tasks:
 
+    - name: Add repo with podman 4
+      ansible.builtin.script: 
+        cmd: podman_4_ubuntu_repo.sh
+        creates: /etc/apt/trusted.gpg.d/devel_kubic_libcontainers_unstable.gpg
+
     - name: Update packages
       ansible.builtin.apt:
         update_cache: true
@@ -21,6 +26,9 @@
     - name: Install packages
       ansible.builtin.apt:
         name:
+          - podman
+          - netavark
+          - aardvark-dns
           - unattended-upgrades
         state: present
       notify: Reboot
