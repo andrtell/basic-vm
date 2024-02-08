@@ -30,6 +30,8 @@ Add the remote machine to your local `/etc/hosts` file (replace `0.0.0.0` with t
 0.0.0.0 vm01
 ```
 
+**Note**: You can skip this step if you have a domain name registered for your VM (e.g. `example.com`).
+
 ### SSH
 
 #### The root user
