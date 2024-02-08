@@ -26,7 +26,7 @@ This README uses `~/.ssh/id_ed25519-root` as the filename for the `root` private
 
 *Before you continue*
 
-Add the remote machine to your local `/etc/hosts` file (replace `0.0.0.0` with its actual IP).
+Add the remote machine to your local `/etc/hosts` file (replace `0.0.0.0` with the actual IP).
 
 ```
 0.0.0.0 vm01
@@ -129,7 +129,7 @@ Run the remaining playbooks to complete step 2.
 ansible-playbook -i inventory.yaml --ask-become-pass playbooks/0[2-4]*.yaml
 ```
 
-## Verify setup
+## Verify it works
 
 ### SSH
 
