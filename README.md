@@ -26,7 +26,7 @@ This README uses `~/.ssh/id_ed25519-root` as the filename for the `root` private
 
 *Before you continue*
 
-Add the remote machine to your local `/etc/hosts` file (replace `0.0.0.0` with the actual IP of the remote machine).
+Add the remote machine to your local `/etc/hosts` file (replace `0.0.0.0` with its actual IP).
 
 ```
 0.0.0.0 vm01
