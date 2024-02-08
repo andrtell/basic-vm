@@ -129,8 +129,6 @@ Run the remaining playbooks to complete step 2.
 ansible-playbook -i inventory.yaml --ask-become-pass playbooks/0[2-4]*.yaml
 ```
 
-Ok, done!
-
 ## Test your setup
 
 ### SSH
@@ -154,3 +152,5 @@ Run a Podman command on the the remote machine.
 ```
 podman -r -c vm01 version
 ```
+
+Ok, done!
