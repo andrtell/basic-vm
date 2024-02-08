@@ -110,7 +110,7 @@ These playbooks will setup the firewall and add Podman to the remote machine.
 You will be prompted for the `sudo` password you provided in step 1.
 
 ```
-ansible-playbook -i inventory.yaml --ask-become-pass playbooks/0[2-3]*.yaml
+ansible-playbook -i inventory.yaml --ask-become-pass playbooks/0[2-4]*.yaml
 ```
 
 ## Test your setup.
