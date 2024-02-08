@@ -4,7 +4,7 @@ Use Ansible to configure a remote machine running Ubuntu 22.04 LTS.
 
 Such that:
 
-- SSH login for the user `root` will be disabled.
+- SSH login for `root` will be disabled.
 - A new user `agent` will be created with SSH access (no password, key only).
 - A Podman daemon will be running.
 - A Firewall will block traffic on all ports except on port 22 (SSH).
