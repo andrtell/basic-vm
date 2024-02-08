@@ -113,7 +113,7 @@ You will be prompted for the `sudo` password you provided in step 1.
 ansible-playbook -i inventory.yaml --ask-become-pass playbooks/0[2-4]*.yaml
 ```
 
-## Test your setup.
+## Test your setup
 
 ### SSH
 
