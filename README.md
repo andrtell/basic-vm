@@ -18,6 +18,12 @@ This repo expects you to have `root` access via SSH.
 
 This README assumes the filename `~/.ssh/id_ed25519-root` for the `root` private-key file.
 
+**Optional**
+
+Register a domain name and point it to your VM (e.g `example.com`).  
+
+If you have a domain name, do not touch `/etc/hosts` and instead substitute `vm01` for your domain name in the instructions.
+
 ## Local setup
 
 ### /etc/hosts
@@ -30,7 +36,6 @@ Add the remote machine to your local `/etc/hosts` file (replace `0.0.0.0` with t
 0.0.0.0 vm01
 ```
 
-**Note**: You can skip this step if you have a domain name registered for your VM (e.g. `example.com`).
 
 ### SSH
 
