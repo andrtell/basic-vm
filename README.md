@@ -10,15 +10,15 @@ Such that:
 - The Podman equivalent of a Docker daemon will be installed and started.
 - All network traffic will be blocked except for port 22 (SSH).
 
-## Before you start
+## Create a VM
 
-Create a new machine with your favourite cloud provider running `Ubuntu 22.04 LTS`.
+Create a new VM with your favourite cloud provider running `Ubuntu 22.04 LTS`.
 
-This repo (and README) assumes a you can login to the remote machine as `root`.  
+This repo (and README) assumes you have `root` access to the remote machine.  
 
 Some cloud providers provide a user with `sudo` rights instead of a `root` user.
 
-This README uses `~/.ssh/id_ed25519-root` as the filename for the `root` private-key file. You can use any filename.
+This README assumes the filename `~/.ssh/id_ed25519-root` for the `root` private-key file.
 
 ## Local setup
 
