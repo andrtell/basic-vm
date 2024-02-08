@@ -10,13 +10,11 @@ Such that:
 - The Podman equivalent of a Docker daemon will be installed and started.
 - All network traffic will be blocked except for port 22 (SSH).
 
-## Create a VM
+## Create a machine
 
-Create a new VM with your favourite cloud provider running `Ubuntu 22.04 LTS`.
+Create a new VM with your favourite cloud provider running a fresh install of `Ubuntu 22.04 LTS`.
 
-This repo (and README) assumes you have `root` access to the remote machine.  
-
-Some cloud providers provide a user with `sudo` rights instead of a `root` user.
+This repo expects you to have `root` access via SSH.  
 
 This README assumes the filename `~/.ssh/id_ed25519-root` for the `root` private-key file.
 
@@ -51,7 +49,7 @@ Add the `root` private key to your SSH-agent.
 ssh-add ~/.ssh/id_ed22519-root
 ```
 
-Login over SSH as `root` (as a test).
+Login over SSH as `root` to verify it works.
 
 ```
 ssh root@vm01
@@ -101,9 +99,9 @@ ungrouped:
 
 ### Step 1
 
-Step 1 will create the user `agent` on the remote machine and disable `root` login.
-
 Step 1 will be run as `root`.
+
+Step 1 will create the user `agent` on the remote machine and disable `root` login.
 
 The new user `agent` needs a `sudo` password. Ansible requires the provided password to be in an encrypted form. Here `$(mkpasswd --method=sha-512)` is used.
 
@@ -117,9 +115,11 @@ ansible-playbook -i inventory.yaml --extra-vars "agent_password=$(mkpasswd --met
 
 ### Step 2
 
-Step 2 will install Podman and setup a Firewall on the remote machine.
+Step 2 will be run as `agent`.
 
-Step 2 will be run as the `agent` user. You will be prompted for the `sudo` password you provided in step 1.
+You will be prompted for the `sudo` password you provided in step 1.
+
+Step 2 will install Podman and setup a Firewall on the remote machine.
 
 *Before you continue*
 
@@ -129,7 +129,7 @@ Run the remaining playbooks to complete step 2.
 ansible-playbook -i inventory.yaml --ask-become-pass playbooks/0[2-4]*.yaml
 ```
 
-## Verify it works
+## Test it!
 
 ### SSH
 
