@@ -88,27 +88,25 @@ ungrouped:
 
 ### Step 1
 
-Run the playbook `playbooks/01_user.yaml`. 
-
-This playbook will create the user `agent` on the remote machine.
+Step 1 will create the user `agent` on the remote machine and disable `root` login.
 
 The `agent` user needs a `sudo` password. Ansible requires the provided password to be in an encrypted form. Here `$(mkpasswd --method=sha-512)` is used.
 
-Login over SSH will still required a key.
+Login with user `agent` will still require a key.
+
+Run the playbook `playbooks/01_user.yaml` to complete step 1. 
 
 ```
 ansible-playbook -i inventory.yaml --extra-vars "agent_password=$(mkpasswd --method=sha-512)" playbooks/01_user.yaml
 ```
 
-At this point the `agent` user has been created and `root` login has been disabled.
-
 ### Step 2
 
-Run all other playbooks. 
-
-These playbooks will setup the firewall and add Podman to the remote machine.
+Step 2 will install Podman and setup a Firewall on the remote machine.
 
 You will be prompted for the `sudo` password you provided in step 1.
+
+Run the remaining playbooks to complete step 2.
 
 ```
 ansible-playbook -i inventory.yaml --ask-become-pass playbooks/0[2-4]*.yaml
