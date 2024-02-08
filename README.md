@@ -45,7 +45,7 @@ Match user root host vm01
     IdentityFile ~/.ssh/id_ed25519-root
 ```
 
-Add the `root` key to your local SSH-agent.
+Add the `root` private key to your SSH-agent.
 
 ```
 ssh-add ~/.ssh/id_ed22519-root
@@ -76,7 +76,7 @@ Match user agent host vm01
     IdentityFile ~/.ssh/id_ed25519-agent
 ```
 
-Add the `agent` key to your local SSH-agent.
+Add the `agent` private key to your SSH-agent.
 
 ```
 ssh-add ~/.ssh/id_ed22519-agent
