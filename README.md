@@ -24,6 +24,8 @@ Register a domain name and point it to your VM (e.g `example.com`).
 
 With a domain name, there is no need change `/etc/hosts`. Instead substitute `vm01` with your domain name in the instructions.
 
+Updates to DNS records propagate slowly. While you wait, you might want to start out with `/etc/hosts`.
+
 ## Local setup
 
 ### /etc/hosts
