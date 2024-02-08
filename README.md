@@ -22,7 +22,7 @@ This README assumes the filename `~/.ssh/id_ed25519-root` for the `root` private
 
 Register a domain name and point it to your VM (e.g `example.com`).  
 
-If you have a domain name, do not touch `/etc/hosts` and instead substitute `vm01` for your domain name in the instructions.
+If you have a domain name, do not touch `/etc/hosts` and instead substitute `vm01` with your domain name in the instructions.
 
 ## Local setup
 
