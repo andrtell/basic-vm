@@ -1,6 +1,6 @@
 # Basic VM
 
-Use Ansible to configure a remote machine running Ubuntu 22.04 LTS.
+Use [Ansible](https://docs.ansible.com/ansible/latest/index.html) to configure a remote machine running Ubuntu 22.04 LTS.
 
 Such that:
 
