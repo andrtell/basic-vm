@@ -104,7 +104,7 @@ ansible-playbook -i inventory.yaml --extra-vars "agent_password=$(mkpasswd --met
 
 Step 2 will install Podman and setup a Firewall on the remote machine.
 
-You will be prompted for the `sudo` password you provided in step 1.
+Step 2 will be run as the `agent` user. You will be prompted for the `sudo` password you provided in step 1.
 
 Run the remaining playbooks to complete step 2.
 
