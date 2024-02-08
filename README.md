@@ -10,17 +10,17 @@ Such that:
 - The Podman equivalent of a Docker daemon will be installed and started.
 - All network traffic will be blocked except for port 22 (SSH).
 
-## Preparations
+## Before you start
 
-### VM
-
-Create a new machine with your favourite cloud provider running Ubuntu 22.04 LTS.
+Create a new machine with your favourite cloud provider running `Ubuntu 22.04 LTS`.
 
 This repo (and README) assumes a you can login to the remote machine as `root`.  
 
-Some cloud providers provide a user with `sudo` rights instead of a `root` user. Details may vary.
+Some cloud providers provide a user with `sudo` rights instead of a `root` user.
 
 This README uses `~/.ssh/id_ed25519-root` as the filename for the `root` private-key file. You can use any filename.
+
+## Local setup
 
 ### /etc/hosts
 
@@ -97,7 +97,7 @@ ungrouped:
       ansible_host: vm01
 ```
 
-## Setup the remote machine
+## Remote setup
 
 ### Step 1
 
@@ -129,7 +129,7 @@ Run the remaining playbooks to complete step 2.
 ansible-playbook -i inventory.yaml --ask-become-pass playbooks/0[2-4]*.yaml
 ```
 
-## Test your setup
+## Verify setup
 
 ### SSH
 
