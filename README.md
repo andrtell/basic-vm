@@ -90,9 +90,10 @@ ungrouped:
 
 Step 1 will create the user `agent` on the remote machine and disable `root` login.
 
-The `agent` user needs a `sudo` password. Ansible requires the provided password to be in an encrypted form. Here `$(mkpasswd --method=sha-512)` is used.
+Step 1 will be run as `root`.
 
-Login with user `agent` will still require a key.
+The new user `agent` needs a `sudo` password. Ansible requires the provided password to be in an encrypted form. Here `$(mkpasswd --method=sha-512)` is used.
+SSH login with the user `agent` will still require a key. Password login will be disabled. 
 
 Run the playbook `playbooks/01_user.yaml` to complete step 1. 
 
