@@ -15,9 +15,17 @@ Such that:
 
 Create a new machine with your favourite cloud provider running Ubuntu 22.04 LTS.
 
+This repo (and README) assumes a you can login to the remote machine as `root`.  
+
+Some cloud providers provide a user with `sudo` rights instead of a `root` user. Details may vary.
+
+This README uses `~/.ssh/id_ed25519-root` as the filename for the `root` private-key file. You can use any filename.
+
 ### /etc/hosts
 
-Add the remote machine to your local `/etc/hosts` file.
+*Before you continue*
+
+Add the remote machine to your local `/etc/hosts` file (replace `0.0.0.0` with the actual IP of the remote machine).
 
 ```
 0.0.0.0 vm01
@@ -27,7 +35,7 @@ Add the remote machine to your local `/etc/hosts` file.
 
 #### The root user
 
-You should have `root` access to your remote machine.
+*Before you continue*
 
 Update your local `~/.ssh/config` file.
 
@@ -50,7 +58,9 @@ ssh root@vm01
 
 #### The agent user
 
-A new user `agent` will be created on the remote machine when you run the Ansible script.
+A new user `agent` will be created on the remote machine after you complete step 1 (see below).
+
+*Before you continue*
 
 Create a SSH key-pair for the new user `agent`.
 
@@ -75,6 +85,8 @@ ssh-add ~/.ssh/id_ed22519-agent
 
 Ansible needs to know about your remote machine.
 
+*Before you continue*
+
 Create the file `inventory.yaml`.
 
 ```
@@ -93,7 +105,9 @@ Step 1 will create the user `agent` on the remote machine and disable `root` log
 Step 1 will be run as `root`.
 
 The new user `agent` needs a `sudo` password. Ansible requires the provided password to be in an encrypted form. Here `$(mkpasswd --method=sha-512)` is used.
-SSH login with the user `agent` will still require a key. Password login will be disabled. 
+SSH login with the user `agent` will still require a key. Password login will be disabled for all users. 
+
+*Before you continue*
 
 Run the playbook `playbooks/01_user.yaml` to complete step 1. 
 
@@ -107,11 +121,15 @@ Step 2 will install Podman and setup a Firewall on the remote machine.
 
 Step 2 will be run as the `agent` user. You will be prompted for the `sudo` password you provided in step 1.
 
+*Before you continue*
+
 Run the remaining playbooks to complete step 2.
 
 ```
 ansible-playbook -i inventory.yaml --ask-become-pass playbooks/0[2-4]*.yaml
 ```
+
+Ok, done!
 
 ## Test your setup
 
