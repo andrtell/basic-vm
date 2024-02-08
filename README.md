@@ -7,6 +7,7 @@ Such that:
 - SSH login for the user `root` will be disabled.
 - A new user `agent` will be created with SSH-login (no password, key only) enabled.
 - A Podman daemon will be running.
+- A Firewall will block traffic on all ports except on port 22 (SSH).
 
 ## Preparations
 
