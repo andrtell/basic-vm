@@ -87,7 +87,7 @@ Ansible needs to know about your remote machine.
 
 *Before you continue*
 
-Create the file `inventory.yaml`.
+Create the file `inventory.yaml` in the root folder of this repo.
 
 ```
 ungrouped:
