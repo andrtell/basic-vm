@@ -4,10 +4,11 @@ Use Ansible to configure a remote machine running Ubuntu 22.04 LTS.
 
 Such that:
 
+- A new user `agent` will be created.
 - SSH login for `root` will be disabled.
-- A new user `agent` will be created with SSH access (no password, key only).
-- A Podman daemon will be running.
-- A Firewall will block traffic on all ports except on port 22 (SSH).
+- Password login over SSH will be disabled for all users. 
+- The Podman equivalent of a Docker daemon will be installed and started.
+- All network traffic will be blocked except for port 22 (SSH).
 
 ## Preparations
 
@@ -105,7 +106,6 @@ Step 1 will create the user `agent` on the remote machine and disable `root` log
 Step 1 will be run as `root`.
 
 The new user `agent` needs a `sudo` password. Ansible requires the provided password to be in an encrypted form. Here `$(mkpasswd --method=sha-512)` is used.
-SSH login with the user `agent` will still require a key. Password login will be disabled for all users. 
 
 *Before you continue*
 
