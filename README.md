@@ -10,67 +10,53 @@ Such that:
 - The Podman equivalent of a Docker daemon will be installed and started.
 - All network traffic will be blocked except for port 22 (SSH).
 
-## Create a machine
+## Create the VM
 
 Create a new VM with your favourite cloud provider running a fresh install of `Ubuntu 22.04 LTS`.
 
-This repo expects you to have `root` access via SSH.  
+You should have `root` access to the VM using SSH and a private key.
 
-This README assumes the filename `~/.ssh/id_ed25519-root` for the `root` private-key file.
+*Before you continue, test your connection*
 
-**Optional (but recommended)**
+```
+ssh -i <ROOT-PRIVATE-KEY-FILE> root@<VM-IP> 
+```
 
-Register a domain name and point it to your VM (e.g `example.com`).  
+## Register a domain
 
-With a domain name, there is no need change `/etc/hosts`. Instead substitute `vm01` with your domain name in the instructions.
+Register a domain (e.g `example.com`) with your favourite domain registrar.
 
-Updates to DNS records propagate slowly. While you wait, you might want to start out with `/etc/hosts`.
+*Before you continue*
+
+Add a top-domain A Record.
+
+| Host  | TTL  | Data          |
+|-------|------|---------------|
+| @     | 3600 | IP of your VM |
+
+Add a wildcard sub-domain A Record.
+
+| Host  | TTL  | Data          |
+|-------|------|---------------|
+| *     | 3600 | IP of your VM |
+
+*Wait a while, then test your domain*
+
+```
+ping <DOMAIN>
+```
 
 ## Local setup
 
-### /etc/hosts
-
-*Before you continue*
-
-Add the remote machine to your local `/etc/hosts` file (replace `0.0.0.0` with the actual IP).
-
-```
-0.0.0.0 vm01
-```
-
-
 ### SSH
 
-#### The root user
+A new user `agent` will be created on the VM after you complete step 1.
+
+To be able to login as the user `agent`, you need to create a new SSH key pair.
 
 *Before you continue*
 
-Update your local `~/.ssh/config` file.
-
-```
-Match user root host vm01
-    IdentityFile ~/.ssh/id_ed25519-root
-```
-
-Add the `root` private key to your SSH-agent.
-
-```
-ssh-add ~/.ssh/id_ed22519-root
-```
-
-Login over SSH as `root` to verify it works.
-
-```
-ssh root@vm01
-```
-
-#### The agent user
-
-A new user `agent` will be created on the remote machine after you complete step 1 (see below).
-
-*Before you continue*
-
-Create a SSH key-pair for the new user `agent`.
+Create a new key pair for the user `agent`.
 
 ```
 ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519-agent -C agent
@@ -79,7 +65,7 @@ ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519-agent -C agent
 Update your local `~/.ssh/config` file.
 
 ```
-Match user agent host vm01
+Match user agent host <DOMAIN>
     IdentityFile ~/.ssh/id_ed25519-agent
 ```
 
@@ -91,7 +77,7 @@ ssh-add ~/.ssh/id_ed22519-agent
 
 ### Ansible
 
-Ansible needs to know about your remote machine.
+Ansible needs to know about your VM.
 
 *Before you continue*
 
@@ -100,66 +86,62 @@ Create the file `inventory.yaml` in the root folder of this repo.
 ```
 ungrouped:
   hosts:
-    vm01:
-      ansible_host: vm01
+    vm:
+      ansible_host: <DOMAIN>
 ```
 
 ## Remote setup
 
 ### Step 1
 
-Step 1 will be run as `root`.
+Step 1 will be run as `root` on the VM.
 
-Step 1 will create the user `agent` on the remote machine and disable `root` login.
+After this step is completed, a new user `agent` will have been created  and `root` login will have been disabled.
 
-The new user `agent` needs a `sudo` password. Ansible requires the provided password to be in an encrypted form. Here `$(mkpasswd --method=sha-512)` is used.
+The user `agent` needs a password. The password needs to be provided in an encrypted form. Here `$(mkpasswd --method=sha-512)` is used.
 
 *Before you continue*
 
 Run the playbook `playbooks/01_user.yaml` to complete step 1. 
 
 ```
-ansible-playbook -i inventory.yaml --extra-vars "agent_password=$(mkpasswd --method=sha-512)" playbooks/01_user.yaml
+ansible-playbook -i inventory.yaml --key-file <ROOT-PRIVATE-KEY-FILE> --extra-vars "agent_password=$(mkpasswd --method=sha-512)" playbooks/01_user.yaml
+```
+
+*Then, test your access*.
+
+```
+ssh agent@<DOMAIN>
 ```
 
 ### Step 2
 
-Step 2 will be run as `agent`.
+Step 2 will be run as `agent` on the VM.
 
-You will be prompted for the `sudo` password you provided in step 1.
+Ansible will prompt you for the password you provided in step 1.
 
-Step 2 will install Podman and setup a Firewall on the remote machine.
+After this step is complete, Podman will have been installed and started on the VM.
 
 *Before you continue*
 
-Run the remaining playbooks to complete step 2.
+Run the remaining playbooks.
 
 ```
 ansible-playbook -i inventory.yaml --ask-become-pass playbooks/0[2-4]*.yaml
 ```
 
-## Test it
+*Then test your podman setup*
 
-### SSH
-
-Connect to the remote machine with the user `agent`.
+Create a new remote Podman connection.
 
 ```
-ssh agent@vm01
+podman system connection add vm ssh://agent@<DOMAIN>/run/user/1000/podman/podman.sock
 ```
 
-### Podman
-
-Create a new remote Podman connection on your local machine.
+Then issue a remote command.
 
 ```
-podman system connection add vm01 ssh://agent@vm01/run/user/1000/podman/podman.sock
-```
-
-Run a Podman command on the the remote machine.
-
-```
-podman -r -c vm01 version
+podman -r -c vm version
 ```
 
 **Ok, all done!**
