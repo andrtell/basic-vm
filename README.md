@@ -16,7 +16,7 @@ Create a new VM with your favourite cloud provider running a fresh install of `U
 
 You should have `root` access to the VM using SSH and a private key.
 
-*Before you continue, test your connection*
+*Before you continue, test your access*
 
 ```
 ssh -i <ROOT-PRIVATE-KEY-FILE> root@<VM-IP> 
