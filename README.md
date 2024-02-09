@@ -4,11 +4,11 @@ Following the instructions in this repository you will configure a VM running Ub
 
 Such that:
 
-- A new user `agent` will be created.
+- A new user `agent` will be created on the VM.
 - SSH login for `root` will be disabled.
 - SSH login using a password will be disabled for all users.
 - All network traffic will be blocked except for port 22 (SSH).
-- The Podman equivalent of a Docker daemon will be running on your VM.
+- The Podman equivalent of a Docker daemon will be running on the VM.
 
 ## Create the VM
 
