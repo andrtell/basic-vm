@@ -1,14 +1,14 @@
 # Basic VM
 
-Use [Ansible](https://docs.ansible.com/ansible/latest/index.html) to configure a remote machine running Ubuntu 22.04 LTS.
+Following the instructions in this repository you will configure a VM running Ubuntu 22.04 LTS
 
 Such that:
 
 - A new user `agent` will be created.
 - SSH login for `root` will be disabled.
-- Password login over SSH will be disabled for all users. 
-- The Podman equivalent of a Docker daemon will be installed and started.
+- SSH login using a password will be disabled for all users.
 - All network traffic will be blocked except for port 22 (SSH).
+- The Podman equivalent of a Docker daemon will be running on your VM.
 
 ## Create the VM
 
